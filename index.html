@@ -7,39 +7,41 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #f0f8ff;
+            background: linear-gradient(135deg, #ffafbd, #ffc3a0);
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
             margin: 0;
+            overflow: hidden; /* 防止滚动条出现 */
+            position: relative;
         }
         .container {
             text-align: center;
-            background-color: #fff;
-            padding: 50px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            background-color: rgba(221, 160, 221, 0.8); /* 设置为淡紫色 */
+            padding: 40px 60px;
+            border-radius: 15px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+            z-index: 10; /* 确保文本在烟花之上 */
+            position: absolute;
+            color: #333;
+            font-size: 1.2em;
         }
         h1 {
-            color: #333;
+            color: #d9534f;
+            font-size: 2.5em;
+            margin-bottom: 20px;
         }
         p {
-            font-size: 1.2em;
-            color: #666;
+            color: #5a5a5a;
         }
-        .button {
-            margin-top: 20px;
-            padding: 10px 20px;
-            font-size: 1em;
-            color: #fff;
-            background-color: #007bff;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-        .button:hover {
-            background-color: #0056b3;
+        canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1; /* 确保烟花在文本下面 */
         }
     </style>
 </head>
@@ -47,8 +49,9 @@
     <div class="container">
         <h1>中考加油！</h1>
         <p id="blessing">祝你中考顺利，金榜题名！</p>
-        <button class="button" onclick="displayBlessing()">显示新的祝福语</button>
     </div>
+
+    <canvas id="fireworksCanvas"></canvas>
 
     <script>
         function generateBlessing() {
@@ -65,6 +68,78 @@
 
         function displayBlessing() {
             document.getElementById("blessing").innerText = generateBlessing();
+        }
+
+        window.onload = function() {
+            displayBlessing();  // 显示初始祝福语
+            setInterval(displayBlessing, 3000);  // 每隔3秒更新一次祝福语
+            initFireworks();  // 初始化烟花效果
+        }
+
+        // 烟花效果
+        function initFireworks() {
+            const canvas = document.getElementById('fireworksCanvas');
+            const ctx = canvas.getContext('2d');
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+
+            const particles = [];
+            const colors = ['#ff4e50', '#fc913a', '#f9d423', '#ede574', '#e1f5c4', '#00d4ff', '#00a4ff'];
+
+            function createParticle(x, y) {
+                const color = colors[Math.floor(Math.random() * colors.length)];
+                const particle = {
+                    x: x,
+                    y: y,
+                    speed: Math.random() * 5 + 1,
+                    angle: Math.random() * 2 * Math.PI,
+                    radius: Math.random() * 2 + 1,
+                    alpha: 1,
+                    decay: Math.random() * 0.02 + 0.01,
+                    color: color
+                };
+                particles.push(particle);
+            }
+
+            function render() {
+                ctx.fillStyle = 'rgba(0, 0, 0, 0.1)';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                particles.forEach((particle, index) => {
+                    particle.x += Math.cos(particle.angle) * particle.speed;
+                    particle.y += Math.sin(particle.angle) * particle.speed;
+                    particle.alpha -= particle.decay;
+                    if (particle.alpha <= 0) {
+                        particles.splice(index, 1);
+                    }
+                });
+
+                particles.forEach(particle => {
+                    ctx.beginPath();
+                    ctx.arc(particle.x, particle.y, particle.radius, 0, 2 * Math.PI, false);
+                    ctx.fillStyle = `rgba(${hexToRgb(particle.color)}, ${particle.alpha})`;
+                    ctx.fill();
+                });
+                requestAnimationFrame(render);
+            }
+
+            function hexToRgb(hex) {
+                const bigint = parseInt(hex.substring(1), 16);
+                const r = (bigint >> 16) & 255;
+                const g = (bigint >> 8) & 255;
+                const b = bigint & 255;
+                return `${r}, ${g}, ${b}`;
+            }
+
+            function launchFirework() {
+                const x = Math.random() * canvas.width;
+                const y = Math.random() * canvas.height;
+                for (let i = 0; i < 100; i++) {
+                    createParticle(x, y);
+                }
+            }
+
+            setInterval(launchFirework, 500);  // 每隔500毫秒触发一次烟花
+            render();
         }
     </script>
 </body>
