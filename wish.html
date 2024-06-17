@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>中考加油</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f8ff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            text-align: center;
+            background-color: #fff;
+            padding: 50px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #333;
+        }
+        p {
+            font-size: 1.2em;
+            color: #666;
+        }
+        .button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 1em;
+            color: #fff;
+            background-color: #007bff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>中考加油！</h1>
+        <p id="blessing">祝你中考顺利，金榜题名！</p>
+        <button class="button" onclick="displayBlessing()">显示新的祝福语</button>
+    </div>
+
+    <script>
+        function generateBlessing() {
+            const blessings = [
+                "祝你中考顺利，金榜题名！",
+                "愿你在中考中超常发挥，取得好成绩！",
+                "祝中考成功，梦想成真！",
+                "祝你在中考中取得优异成绩，一帆风顺！",
+                "祝中考顺利，未来一片光明！"
+            ];
+            const index = Math.floor(Math.random() * blessings.length);
+            return blessings[index];
+        }
+
+        function displayBlessing() {
+            document.getElementById("blessing").innerText = generateBlessing();
+        }
+    </script>
+</body>
+</html>
