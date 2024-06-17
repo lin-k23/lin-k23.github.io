@@ -18,10 +18,10 @@
         }
         .container {
             text-align: center;
-            background-color: rgba(221, 160, 221, 0.8); /* 设置为淡紫色 */
+            background-color: rgba(165, 11, 132, 0.8); /* 设置为淡紫色 */
             padding: 40px 60px;
             border-radius: 15px;
-            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 0 15px rgba(131, 44, 44, 0.192);
             z-index: 10; /* 确保文本在烟花之上 */
             position: absolute;
             color: #333;
@@ -33,7 +33,9 @@
             margin-bottom: 20px;
         }
         p {
-            color: #5a5a5a;
+            color: #da7720;
+            font-family: '楷体';
+            font-size:larger;
         }
         canvas {
             position: absolute;
@@ -47,8 +49,9 @@
 </head>
 <body>
     <div class="container">
-        <h1>中考加油！</h1>
-        <p id="blessing">祝你中考顺利，金榜题名！</p>
+        <h1>祝奕昕:
+            中考顺利，金榜题名！</h1>
+        <p id="blessing">长风破浪会有时，直挂云帆济沧海！</p>
     </div>
 
     <canvas id="fireworksCanvas"></canvas>
@@ -56,11 +59,14 @@
     <script>
         function generateBlessing() {
             const blessings = [
-                "祝你中考顺利，金榜题名！",
-                "愿你在中考中超常发挥，取得好成绩！",
-                "祝中考成功，梦想成真！",
-                "祝你在中考中取得优异成绩，一帆风顺！",
-                "祝中考顺利，未来一片光明！"
+                "加油！",
+                "长风破浪会有时，直挂云帆济沧海",
+                "大鹏一日同风起，扶摇直上九万里",
+                "会当凌绝顶，一览众山小",
+                "靡不有初，鲜克有终",
+                "考千淘万漉虽辛苦，吹尽狂沙始到金",
+                "休言女子非英物，夜夜龙泉壁上鸣"
+                
             ];
             const index = Math.floor(Math.random() * blessings.length);
             return blessings[index];
@@ -72,7 +78,7 @@
 
         window.onload = function() {
             displayBlessing();  // 显示初始祝福语
-            setInterval(displayBlessing, 3000);  // 每隔3秒更新一次祝福语
+            setInterval(displayBlessing, 1000);  // 每隔1秒更新一次祝福语
             initFireworks();  // 初始化烟花效果
         }
 
